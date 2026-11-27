@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'core/theme/app_theme.dart';
 import 'features/home/home_screen.dart';
+import 'providers/person_provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const TutorBlacklistApp());
+  
+  // Humne yahan ChangeNotifierProvider ko wrap kar diya hai
+  // taake poore app mein database ka data accessible ho sake.
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => PersonProvider()..loadAllPersons(),
+      child: const TutorBlacklistApp(),
+    ),
+  );
 }
 
 class TutorBlacklistApp extends StatelessWidget {
